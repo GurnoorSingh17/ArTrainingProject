@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://d07qd21gfh2py"]
+
+[ext_resource type="Script" uid="uid://di6d6b6r2uki0" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://b63mmxlnv5lpv" path="res://crane.tscn" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://djujjtn6j47ib" path="res://ui.gd" id="4_lquwl"]
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 1
+background_color = Color(0.7224563, 0.9325699, 0.99999994, 0)
+ambient_light_color = Color(1, 1, 1, 1)
+reflected_light_source = 2
+
+[node name="Main" type="Node3D" unique_id=857525941 node_paths=PackedStringArray("UI")]
+script = ExtResource("1_ig7tw")
+UI = NodePath("UI")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1479260689]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=986638154]
+transform = Transform3D(-0.41575813, 0.26772517, 0.8691768, 0.49966836, -0.7312939, 0.4642634, 0.7599188, 0.62732154, 0.17026758, 0, 2.0948477, 3.1388671)
+light_energy = 5.0
+shadow_enabled = true
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=1739207075]
+transform = Transform3D(0.8145747, 0.21439736, -0.5389823, 0.49966842, -0.73129416, 0.46426353, -0.2946176, -0.64748967, -0.70282125, 0, 2.0948477, 3.1388671)
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=1869194037]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=237717751]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0.0036031678, -0.21109843, -0.29772377)
+
+[node name="AudioListener3D" type="AudioListener3D" parent="XROrigin3D/XRCamera3D" unique_id=410626058]
+current = true
+
+[node name="crane" parent="." unique_id=1745186837 instance=ExtResource("2_0xm2m")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 1.1717296, -5.8732905, -0.5490842)
+MoveSpeed = 10.0
+
+[node name="UI" type="Control" parent="." unique_id=1301971019 node_paths=PackedStringArray("Crane")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_lquwl")
+Crane = NodePath("../crane")
+
+[node name="Up" type="Button" parent="UI" unique_id=1279237791]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.15
+anchor_bottom = 0.46500003
+offset_top = 210.0
+offset_right = 0.19999695
+offset_bottom = 0.17999268
+grow_vertical = 2
+text = "UP"
+
+[node name="Down" type="Button" parent="UI" unique_id=1971089443]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.57500005
+anchor_right = 0.149
+anchor_bottom = 1.0
+offset_top = -0.10003662
+offset_right = 0.35198975
+offset_bottom = -184.5
+grow_vertical = 2
+text = "Down
+"
+
+[node name="EnterAR" type="Button" parent="." unique_id=597752686]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.5
+offset_top = -27.25
+offset_right = 82.5
+offset_bottom = 27.25
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "EnterAr"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="button_down" from="UI/Up" to="UI" method="_on_up_button_down"]
+[connection signal="button_up" from="UI/Up" to="UI" method="_on_up_button_up"]
+[connection signal="button_down" from="UI/Down" to="UI" method="_on_down_button_down"]
+[connection signal="button_up" from="UI/Down" to="UI" method="_on_down_button_up"]
